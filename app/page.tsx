@@ -1,3 +1,4 @@
+import HomeSection from "@/components/HomeSection";
 import NavButtons from "@/components/NavButtons";
 
 export default function Home() {
@@ -21,8 +22,7 @@ export default function Home() {
 
       <main className="container mx-auto px-4 py-8" role="main">
         <div className="mb-8">here goes the filter by category buttons.</div>
-        Here goes the main content of the page, such as search results or
-        featured items.
+        <HomeSection />
       </main>
     </div>
   );

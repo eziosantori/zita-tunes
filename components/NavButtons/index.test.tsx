@@ -1,9 +1,17 @@
+import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import NavButtons from "./index";
-import "@testing-library/jest-dom";
 
 jest.mock("next/link", () => {
-  return ({ children, href }: any) => <a href={href}>{children}</a>;
+  const MockLink = ({
+    children,
+    href,
+  }: {
+    children: React.ReactNode;
+    href: string;
+  }) => <a href={href}>{children}</a>;
+  MockLink.displayName = "MockLink";
+  return MockLink;
 });
 
 jest.mock("lucide-react", () => ({
