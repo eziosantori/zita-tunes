@@ -1,7 +1,4 @@
-import { Heart, User } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
+import NavButtons from "@/components/NavButtons";
 
 export default function Home() {
   return (
@@ -11,27 +8,7 @@ export default function Home() {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <h1 className="text-3xl font-bold">zTunes</h1>
-              <div className="flex items-center gap-4">
-                <Link href="/favorites">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="relative bg-transparent"
-                  >
-                    <Heart className="h-4 w-4 mr-2" />
-                    Favorites
-                    <Badge
-                      variant="secondary"
-                      className="ml-2 h-5 px-1.5 text-xs bg-secondary text-primary-foreground"
-                    ></Badge>
-                  </Button>
-                </Link>
-                {/* Sign In button */}
-                <Button variant="outline" size="sm" className="bg-transparent">
-                  <User className="h-4 w-4 mr-2" />
-                  Sign In
-                </Button>
-              </div>
+              <NavButtons />
             </div>
 
             <nav aria-label="Search controls" className="space-y-4">
