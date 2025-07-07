@@ -34,11 +34,10 @@ const MEDIA_SECTIONS = [
 ] as const;
 
 const HomeSection = ({ initialData }: HomeSectionProps) => {
-  // const mediaTypes: MediaType[] = ["album", "audiobook", "podcast"];
   const { query, isLoading, albums, audiobooks, podcasts, activeTypes } =
     useMediaStore();
 
-  // should show anything?
+  // prefer to use functions in order to test it properly and mock easily
   const _hasSearchResults = useMemo(() => {
     return hasSearchResults(query, isLoading, albums, audiobooks, podcasts);
   }, [query, isLoading, albums, audiobooks, podcasts]);
