@@ -6,7 +6,6 @@ import type { MediaItem, MediaType } from "@/types/media";
 import Image from "next/image";
 import type React from "react";
 import { memo } from "react";
-// import LazyImage from "@/components/LazyImage";
 
 interface MediaCardProps {
   item: MediaItem;

@@ -4,7 +4,7 @@ import { devtools } from "zustand/middleware";
 
 interface MediaStore {
   query: string; // Added query state for search functionality
-  activeTypes?: MediaType[]; // Optional, can be used to track selected media types
+  activeTypes: MediaType[]; // Optional, can be used to track selected media types
   // State
   albums: MediaItem[];
   audiobooks: MediaItem[];
@@ -18,7 +18,7 @@ interface MediaStore {
 
   // Actions
   setQuery: (query: string) => void;
-  setMediaTypes?: (types: MediaType[]) => void;
+  setMediaTypes: (activeTypes: MediaType[]) => void;
 
   // Individual actions for each media type
   setAlbums: (albums: MediaItem[]) => void;
@@ -56,8 +56,8 @@ export const useMediaStore = create<MediaStore>()(
     (set) => ({
       // Initial state
       ...initialState,
-      setMediaTypes: (types) =>
-        set({ activeTypes: types }, false, "setMediaTypes"),
+      setMediaTypes: (activeTypes) =>
+        set({ activeTypes }, false, "setMediaTypes"),
       setQuery: (query) => set({ query }, false, "setQuery"),
       // Actions
       setAlbums: (albums) => set({ albums }, false, "setAlbums"),

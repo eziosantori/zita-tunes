@@ -1,8 +1,11 @@
 "use client";
 
+import { getMediaData, hasSearchResults, showNoResults } from "@/lib/utils";
 import { useMediaStore } from "@/store/media-store";
 import { MediaItem, MediaType } from "@/types/media";
+import { useMemo } from "react";
 import MediaSection from "./Media/MediaSection";
+
 interface HomeSectionProps {
   initialData: {
     albums: MediaItem[];
@@ -11,26 +14,40 @@ interface HomeSectionProps {
   };
 }
 
+// Configurazione centralizzata per le sezioni
+const MEDIA_SECTIONS = [
+  {
+    key: "album" as MediaType,
+    searchTitle: "Albums",
+    initialTitle: "Top Albums",
+  },
+  {
+    key: "audiobook" as MediaType,
+    searchTitle: "Audiobooks",
+    initialTitle: "Top Audiobooks",
+  },
+  {
+    key: "podcast" as MediaType,
+    searchTitle: "Podcasts",
+    initialTitle: "Top Podcasts",
+  },
+] as const;
+
 const HomeSection = ({ initialData }: HomeSectionProps) => {
-  const mediaTypes: MediaType[] = ["album", "audiobook", "podcast"];
-  const { query, isLoading, albums, audiobooks, podcasts } = useMediaStore();
+  // const mediaTypes: MediaType[] = ["album", "audiobook", "podcast"];
+  const { query, isLoading, albums, audiobooks, podcasts, activeTypes } =
+    useMediaStore();
 
-  // Determina se mostrare i risultati di ricerca o quelli iniziali
-  const hasSearchResults =
-    query &&
-    !isLoading &&
-    (albums?.length > 0 || audiobooks?.length > 0 || podcasts?.length > 0);
+  // should show anything?
+  const _hasSearchResults = useMemo(() => {
+    return hasSearchResults(query, isLoading, albums, audiobooks, podcasts);
+  }, [query, isLoading, albums, audiobooks, podcasts]);
 
-  const showInitialData = !query || isLoading;
+  const _showNoResults = useMemo(() => {
+    return showNoResults(query, isLoading, albums, audiobooks, podcasts);
+  }, [isLoading, query, albums, audiobooks, podcasts]);
 
-  const showNoResults =
-    !isLoading &&
-    query &&
-    albums?.length === 0 &&
-    audiobooks?.length === 0 &&
-    podcasts?.length === 0;
-
-  if (showNoResults) {
+  if (_showNoResults) {
     return (
       <div
         className="text-center py-12 animate-in fade-in-0 duration-300"
@@ -46,78 +63,29 @@ const HomeSection = ({ initialData }: HomeSectionProps) => {
 
   return (
     <div className="space-y-12" role="region" aria-label="Media content">
-      {/* Always render sections but control visibility to prevent layout shifts */}
-      {hasSearchResults && (
-        <>
-          <MediaSection
-            title="Albums"
-            items={albums}
-            mediaType="album"
-            isLoading={isLoading}
-            isVisible={mediaTypes.includes("album") && albums?.length > 0}
-          />
-          <MediaSection
-            title="Audiobooks"
-            items={audiobooks}
-            mediaType="audiobook"
-            isLoading={isLoading}
-            isVisible={
-              mediaTypes.includes("audiobook") && audiobooks?.length > 0
-            }
-          />
-          <MediaSection
-            title="Podcasts"
-            items={podcasts}
-            mediaType="podcast"
-            isLoading={isLoading}
-            isVisible={mediaTypes.includes("podcast") && podcasts?.length > 0}
-          />
-        </>
-      )}
-      {showInitialData && (
-        <>
-          <MediaSection
-            title="Top Albums"
-            items={initialData.albums}
-            isLoading={isLoading}
-            mediaType="album"
-            isVisible={
-              mediaTypes.includes("album") && initialData.albums?.length > 0
-            }
-          />
-          <MediaSection
-            title="Top Audiobooks"
-            items={initialData.audiobooks}
-            isLoading={!!query && isLoading}
-            mediaType="audiobook"
-            isVisible={
-              mediaTypes.includes("audiobook") &&
-              initialData.audiobooks?.length > 0
-            }
-          />
-          <MediaSection
-            title="Top Podcasts"
-            items={initialData.podcasts}
-            isLoading={!!query && isLoading}
-            mediaType="podcast"
-            isVisible={
-              mediaTypes.includes("podcast") && initialData.podcasts?.length > 0
-            }
-          />
-        </>
-      )}
+      {MEDIA_SECTIONS.map((section) => {
+        const isSearchMode = !!_hasSearchResults;
+        const items = getMediaData(section.key, isSearchMode, initialData, {
+          albums,
+          audiobooks,
+          podcasts,
+        });
+        const title = isSearchMode ? section.searchTitle : section.initialTitle;
+        const shouldShow =
+          (activeTypes.length === 0 || activeTypes.includes(section.key)) &&
+          items.length > 0;
 
-      {showNoResults && (
-        <div
-          className="text-center py-12 animate-in fade-in-0 duration-300"
-          role="status"
-          aria-live="polite"
-        >
-          <p className="text-muted-foreground">
-            No results found. Try a different search term.
-          </p>
-        </div>
-      )}
+        return (
+          <MediaSection
+            key={section.key}
+            title={title}
+            items={items}
+            mediaType={section.key}
+            isLoading={isLoading}
+            isVisible={shouldShow}
+          />
+        );
+      })}
     </div>
   );
 };

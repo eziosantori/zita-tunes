@@ -1,4 +1,4 @@
-import { MediaType } from "@/types/media";
+import { MediaItem, MediaType } from "@/types/media";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -37,3 +37,81 @@ export function getCategoryInfo(type: MediaType) {
       };
   }
 }
+
+/**
+ * Gets the media data for a specific type and mode.
+ * @param mediaType The type of media (album, podcast, audiobook).
+ * @param isSearchMode Whether the search is currently active.
+ * @param initialData The initial media data.
+ * @param searchData The search results data.
+ * @returns The relevant media data based on the type and mode.
+ */
+export const getMediaData = (
+  mediaType: MediaType,
+  isSearchMode: boolean,
+  initialData: {
+    albums: MediaItem[];
+    podcasts: MediaItem[];
+    audiobooks: MediaItem[];
+  },
+  searchData: {
+    albums: MediaItem[];
+    audiobooks: MediaItem[];
+    podcasts: MediaItem[];
+  }
+) => {
+  const dataKey = `${mediaType}s` as keyof typeof searchData;
+
+  return isSearchMode ? searchData[dataKey] || [] : initialData[dataKey] || [];
+};
+
+/**
+ * Determines if there are search results based on the query and loading state.
+ * @param query The search query.
+ * @param isLoading Whether the search is currently loading.
+ * @param albums The list of album results.
+ * @param audiobooks The list of audiobook results.
+ * @param podcasts The list of podcast results.
+ * @returns True if there are search results, false otherwise.
+ */
+export const hasSearchResults = (
+  query: string,
+  isLoading: boolean,
+  albums: MediaItem[],
+  audiobooks: MediaItem[],
+  podcasts: MediaItem[]
+) => {
+  if (!query) return false;
+
+  return (
+    query &&
+    !isLoading &&
+    (albums?.length > 0 || audiobooks?.length > 0 || podcasts?.length > 0)
+  );
+};
+/**
+ * Determines if there are no search results based on the query and loading state.
+ * @param query The search query.
+ * @param isLoading Whether the search is currently loading.
+ * @param albums The list of album results.
+ * @param audiobooks The list of audiobook results.
+ * @param podcasts The list of podcast results.
+ * @returns True if there are no search results, false otherwise.
+ */
+export const showNoResults = (
+  query: string,
+  isLoading: boolean,
+  albums: MediaItem[],
+  audiobooks: MediaItem[],
+  podcasts: MediaItem[]
+) => {
+  if (!query) return false;
+
+  return (
+    !isLoading &&
+    // query &&
+    albums?.length === 0 &&
+    audiobooks?.length === 0 &&
+    podcasts?.length === 0
+  );
+};

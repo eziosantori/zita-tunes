@@ -1,3 +1,4 @@
+import Filters from "@/components/Filters";
 import HomeSection from "@/components/HomeSection";
 import NavButtons from "@/components/NavButtons";
 import SearchBarWrapper from "@/components/SearchBar/SearchBarWrapper";
@@ -31,7 +32,9 @@ export default async function Home() {
       </header>
 
       <main className="container mx-auto px-4 py-8" role="main">
-        <div className="mb-8">here goes the filter by category buttons.</div>
+        <div className="mb-8">
+          <Filters />
+        </div>
         <HomeSection initialData={initialData} />
       </main>
     </div>
