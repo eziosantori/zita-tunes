@@ -3,10 +3,10 @@
 import { Badge } from "@/components/ui/badge";
 import { getCategoryInfo, getHighResArtwork } from "@/lib/utils";
 import type { MediaItem, MediaType } from "@/types/media";
+import Image from "next/image";
 import type React from "react";
 import { memo } from "react";
 // import LazyImage from "@/components/LazyImage";
-import LazyImageWrapper from "../LazyImage/LazyImageWrapper";
 
 interface MediaCardProps {
   item: MediaItem;
@@ -50,13 +50,16 @@ const MediaCard = ({
         aria-label={`View ${item.trackName} by ${item.artistName} on iTunes. Released in ${releaseYear}. Genre: ${item.primaryGenreName}`}
       >
         <div className="aspect-square mb-2 md:mb-3 overflow-hidden rounded-lg bg-muted/50 relative">
-          <LazyImageWrapper
-            src={getHighResArtwork(item.artworkUrl100, 400)}
-            fallbackSrc={item.artworkUrl100}
+          <Image
+            src={
+              getHighResArtwork(item.artworkUrl100, 400) || "/placeholder.svg"
+            }
             alt={`${item.trackName} by ${item.artistName} artwork`}
-            className="h-full w-full object-cover"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+            data-ai-hint={`${item.trackName} artwork`}
           />
-
           {/* Category badge - top left */}
           {showCategoryBadge && (
             <div className="absolute top-2 left-2">

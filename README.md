@@ -1,36 +1,123 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Top 20 Media Explorer
+
+A React/Next.js application that displays the top 20 albums, audiobooks, and podcasts from the Apple iTunes Store with search and filtering capabilities.
+
+## Features
+
+- 📱 **Responsive Design**: Works on desktop and mobile devices
+- 🔍 **Real-time Search**: Search across all media types simultaneously
+- 🎛️ **Filtering**: Filter content by media type (albums, audiobooks, podcasts)
+- ♿ **Accessible**: Built with accessibility in mind using Radix UI components
+- 🎨 **Modern UI**: Clean interface built with Tailwind CSS
+
+## Tech Stack
+
+- **Framework**: Next.js 15.2.4
+- **Styling**: Tailwind CSS 3.4.17
+- **Components**: Radix UI
+- **Language**: TypeScript
+- **API**: iTunes Search API
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node.js 18+
+- pnpm (recommended) or npm/yarn
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd zitad-player
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Run the development server:
+
+   ```bash
+   pnpm dev
+   ```
+
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
+
+### Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm start` - Start production server
+- `pnpm lint` - Run ESLint
+
+## Usage
+
+1. **Browse Content**: The app displays top 20 items for each media type by default
+2. **Search**: Use the search bar to find specific content across all media types
+3. **Filter**: Use the filter tabs to show only specific media types
+4. **Responsive**: The layout adapts to different screen sizes
+
+## API Integration
+
+The app uses the iTunes Search API to fetch data:
+
+- Albums: `https://itunes.apple.com/search?term=*&media=music&entity=album&limit=20`
+- Audiobooks: `https://itunes.apple.com/search?term=*&media=audiobook&limit=20`
+- Podcasts: `https://itunes.apple.com/search?term=*&media=podcast&limit=20`
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── page.tsx          # Main page component
+│   ├── layout.tsx        # Root layout
+│   └── globals.css       # Global styles
+├── components/
+│   ├── MediaGrid.tsx     # Grid layout for media items
+│   ├── SearchBar.tsx     # Search input component
+│   ├── FilterTabs.tsx    # Media type filter tabs
+│   └── MediaCard.tsx     # Individual media item card
+├── lib/
+│   ├── api.ts           # iTunes API integration
+│   └── types.ts         # TypeScript type definitions
+└── hooks/
+    └── useMedia.ts      # Custom hook for media data
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Accessibility Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Semantic HTML structure
+- Keyboard navigation support
+- ARIA attributes for screen readers
+- Sufficient color contrast
+- Focus indicators
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Performance Considerations
 
-## Learn More
+- Debounced search to reduce API calls
+- Responsive images
+- Efficient state management
+- Optimized bundle size
 
-To learn more about Next.js, take a look at the following resources:
+## Future Enhancements
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [ ] User authentication with ZITADEL Cloud
+- [ ] Favorites/wishlist functionality
+- [ ] Advanced filtering options
+- [ ] Pagination or infinite scroll
+- [ ] Offline support
+- [ ] Better error handling
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+This is a proof of concept project. Feel free to submit issues or pull requests.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License

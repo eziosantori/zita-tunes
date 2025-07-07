@@ -1,7 +1,18 @@
 import HomeSection from "@/components/HomeSection";
 import NavButtons from "@/components/NavButtons";
+import SearchBarWrapper from "@/components/SearchBar/SearchBarWrapper";
+import { fetchMediaData } from "@/services/itunes-api";
+export const revalidate = 3600;
 
-export default function Home() {
+export default async function Home() {
+  const [albums, podcasts, audiobooks] = await Promise.all([
+    (await fetchMediaData("music", "music", "album")).results,
+    (await fetchMediaData("bestseller", "audiobook", "audiobook")).results,
+    (await fetchMediaData("podcast", "podcast", "podcast")).results,
+  ]);
+
+  const initialData = { albums, podcasts, audiobooks };
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
@@ -13,8 +24,7 @@ export default function Home() {
             </div>
 
             <nav aria-label="Search controls" className="space-y-4">
-              here will be the search controls, such as input fields and
-              buttons.
+              <SearchBarWrapper placeholder="Search albums, audiobooks, podcasts..." />
             </nav>
           </div>
         </div>
@@ -22,7 +32,7 @@ export default function Home() {
 
       <main className="container mx-auto px-4 py-8" role="main">
         <div className="mb-8">here goes the filter by category buttons.</div>
-        <HomeSection />
+        <HomeSection initialData={initialData} />
       </main>
     </div>
   );
