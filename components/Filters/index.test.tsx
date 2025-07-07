@@ -70,7 +70,7 @@ describe("Filters", () => {
 
     const allButton = screen.getByText("All");
     expect(allButton).toHaveAttribute("aria-pressed", "true");
-    expect(allButton).toHaveClass("bg-primary", "text-primary-foreground");
+    expect(allButton).toHaveClass("bg-primary", "text-secondary-foreground");
   });
 
   it("shows individual types as selected when active", () => {
@@ -87,7 +87,7 @@ describe("Filters", () => {
 
     const albumButton = screen.getByText("Album");
     expect(albumButton).toHaveAttribute("aria-pressed", "true");
-    expect(albumButton).toHaveClass("bg-primary", "text-primary-foreground");
+    expect(albumButton).toHaveClass("bg-primary", "text-secondary-foreground");
 
     const audiobookButton = screen.getByText("Audiobook");
     expect(audiobookButton).toHaveAttribute("aria-pressed", "false");
@@ -95,7 +95,10 @@ describe("Filters", () => {
 
     const podcastButton = screen.getByText("Podcast");
     expect(podcastButton).toHaveAttribute("aria-pressed", "true");
-    expect(podcastButton).toHaveClass("bg-primary", "text-primary-foreground");
+    expect(podcastButton).toHaveClass(
+      "bg-primary",
+      "text-secondary-foreground"
+    );
   });
 
   it("calls setMediaTypes with empty array when 'All' is clicked", async () => {

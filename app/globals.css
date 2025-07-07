@@ -127,5 +127,5 @@
   button[type="button"], 
   button[type="submit"] {
     @apply cursor-pointer;
-  }  
+  }
 }

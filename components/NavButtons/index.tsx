@@ -1,26 +1,21 @@
+import { Heart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Heart, User } from "lucide-react";
-import { Badge } from "../ui/badge";
+import { BadgeCount } from "./BadgeCount";
+import { SignInButton } from "./SignInButton";
 
 const NavButtons = () => {
   return (
     <div className="flex items-center gap-4">
       <Link href="/favorites">
         <Button variant="outline" size="sm" className="relative bg-transparent">
-          <Heart className="h-4 w-4 mr-2" />
-          Favorites
-          <Badge
-            variant="secondary"
-            className="ml-2 h-5 px-1.5 text-xs bg-secondary text-primary-foreground"
-          ></Badge>
+          <Heart className="h-4 w-4 mr-0 sm:mr-2" />
+          <span className="hidden sm:inline">Favorites</span>
+          <BadgeCount />
         </Button>
       </Link>
       {/* Sign In button */}
-      <Button variant="outline" size="sm" className="bg-transparent">
-        <User className="h-4 w-4 mr-2" />
-        Sign In
-      </Button>
+      <SignInButton />
     </div>
   );
 };

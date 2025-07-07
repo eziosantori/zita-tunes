@@ -29,13 +29,13 @@ const FilterButtons = ({
       >
         {/* All button */}
         <Button
-          variant={isAllSelected ? "default" : "outline"}
+          variant="outline"
           size="sm"
           onClick={onSelectAll}
-          className={`transition-all duration-200 ${
+          className={`transition-all duration-200 border ${
             isAllSelected
-              ? "bg-primary text-primary-foreground shadow-sm"
-              : "hover:bg-accent hover:text-accent-foreground border-secondary/30 hover:border-secondary/50"
+              ? "bg-primary text-secondary-foreground border-primary shadow-sm"
+              : "bg-background text-foreground border-secondary/30 hover:bg-accent hover:text-accent-foreground hover:border-secondary/50"
           }`}
           aria-pressed={isAllSelected}
           aria-label={`${
@@ -55,14 +55,14 @@ const FilterButtons = ({
           return (
             <Button
               key={key}
-              variant={isActive ? "default" : "outline"}
+              variant="outline"
               size="sm"
               onClick={() => onToggle(mediaType)}
-              //   className={`transition-all duration-200 ${
-              //     isActive
-              //       ? "bg-primary text-primary-foreground shadow-sm"
-              //       : "hover:bg-accent hover:text-accent-foreground border-secondary/30 hover:border-secondary/50"
-              //   }`}
+              className={`transition-all duration-200 border ${
+                isActive
+                  ? "bg-primary text-secondary-foreground border-primary shadow-sm"
+                  : "bg-background text-foreground border-secondary/30 hover:bg-accent hover:text-accent-foreground hover:border-secondary/50"
+              }`}
               aria-pressed={isSelected}
               aria-label={`${isSelected ? "Remove" : "Add"} ${label} filter`}
               type="button"

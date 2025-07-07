@@ -32,12 +32,6 @@ describe("NavButtons", () => {
     expect(screen.getByTestId("user-icon")).toBeInTheDocument();
   });
 
-  it("renders a Badge in the Favorites button", () => {
-    const { container } = render(<NavButtons />);
-    const badge = container.querySelector('[data-slot="badge"]');
-    expect(badge).toBeInTheDocument();
-  });
-
   it("Favorites button links to /favorites", () => {
     render(<NavButtons />);
     const link = screen.getByRole("link", { name: /favorites/i });

@@ -6,6 +6,7 @@ import type { MediaItem, MediaType } from "@/types/media";
 import Image from "next/image";
 import type React from "react";
 import { memo } from "react";
+import FavoriteButton from "../FavoriteButton";
 
 interface MediaCardProps {
   item: MediaItem;
@@ -73,10 +74,10 @@ const MediaCard = ({
 
           {/* Favorite button - top right */}
           <div className="absolute top-2 right-2">
-            {/* TODO <FavoriteButton
+            <FavoriteButton
               item={item}
               className="bg-background/80 backdrop-blur-sm"
-            /> */}
+            />
           </div>
         </div>
 
