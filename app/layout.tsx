@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://itunes-media-browser.vercel.app",
+    url: "https://ztunes.vercel.app",
     title: "zTunes - Discover Albums, Audiobooks & Podcasts",
     description:
       "Browse and search the top 20 albums, audiobooks, and podcasts from the iTunes Store.",
@@ -66,7 +66,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <link rel="canonical" href="https://ztunes.vercel.app" />
+        <link rel="canonical" href="https://zita-tunes.vercel.app" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -76,7 +76,7 @@ export default function RootLayout({
               name: "zTunes",
               description:
                 "Browse and search the top 20 albums, audiobooks, and podcasts from the iTunes Store",
-              url: "https://ztunes.vercel.app",
+              url: "https://zita-tunes.vercel.app",
               applicationCategory: "MultimediaApplication",
               operatingSystem: "Web Browser",
               offers: {

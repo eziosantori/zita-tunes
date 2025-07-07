@@ -82,8 +82,14 @@ const MediaSection = ({
                   </CarouselItem>
                 ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden sm:flex -left-4" />
-          <CarouselNext className="hidden sm:flex -right-4" />
+          <CarouselPrevious
+            className="hidden sm:flex -left-8"
+            variant={"default"}
+          />
+          <CarouselNext
+            className="hidden sm:flex -right-8"
+            variant={"default"}
+          />
         </Carousel>
       </div>
       {/* Mobile swipe hint - Only visible on first load */}

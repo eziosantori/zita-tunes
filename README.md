@@ -1,4 +1,4 @@
-# Top 20 Media Explorer
+# zTunes Media Explorer
 
 A React/Next.js application that displays the top 20 albums, audiobooks, and podcasts from the Apple iTunes Store with search and filtering capabilities.
 
@@ -13,7 +13,7 @@ A React/Next.js application that displays the top 20 albums, audiobooks, and pod
 ## Tech Stack
 
 - **Framework**: Next.js 15.2.4
-- **Styling**: Tailwind CSS 3.4.17
+- **Styling**: Tailwind CSS 4.x + shadcn-ui
 - **Components**: Radix UI
 - **Language**: TypeScript
 - **API**: iTunes Search API
@@ -31,7 +31,7 @@ A React/Next.js application that displays the top 20 albums, audiobooks, and pod
 
    ```bash
    git clone <repository-url>
-   cd zitad-player
+   cd zita-tunes
    ```
 
 2. Install dependencies:
@@ -54,6 +54,33 @@ A React/Next.js application that displays the top 20 albums, audiobooks, and pod
 - `pnpm build` - Build for production
 - `pnpm start` - Start production server
 - `pnpm lint` - Run ESLint
+- `pnpm test` - Run tests
+
+### Performance Audit with Lighthouse
+
+To run a comprehensive performance audit:
+
+1. Build the project for production:
+
+   ```bash
+   pnpm build
+   ```
+
+2. Start the production server:
+
+   ```bash
+   pnpm start
+   ```
+
+3. Open a **private/incognito browser window** and navigate to `http://localhost:3000`
+
+4. Run Lighthouse audit:
+   - Press `F12` to open DevTools
+   - Go to the "Lighthouse" tab
+   - Select all categories (Performance, Accessibility, Best Practices, SEO)
+   - Click "Analyze page load"
+
+_Note: Use a private session to avoid browser extensions affecting the audit results._
 
 ## Usage
 
@@ -73,21 +100,54 @@ The app uses the iTunes Search API to fetch data:
 ## Project Structure
 
 ```
-src/
-├── app/
-│   ├── page.tsx          # Main page component
-│   ├── layout.tsx        # Root layout
-│   └── globals.css       # Global styles
-├── components/
-│   ├── MediaGrid.tsx     # Grid layout for media items
-│   ├── SearchBar.tsx     # Search input component
-│   ├── FilterTabs.tsx    # Media type filter tabs
-│   └── MediaCard.tsx     # Individual media item card
-├── lib/
-│   ├── api.ts           # iTunes API integration
-│   └── types.ts         # TypeScript type definitions
-└── hooks/
-    └── useMedia.ts      # Custom hook for media data
+app/
+├── actions.ts            # Server actions
+├── favicon.ico          # App favicon
+├── globals.css          # Global styles
+├── layout.tsx           # Root layout
+├── page.tsx             # Main page component
+└── favorites/
+    └── page.tsx         # Favorites page
+components/
+├── ui/                  # shadcn-ui components
+│   ├── badge.tsx
+│   ├── button.tsx
+│   ├── carousel.tsx
+│   ├── input.tsx
+│   └── sonner.tsx
+├── HomeSection.tsx      # Home section wrapper
+├── FavoriteButton/      # Favorite button components
+│   ├── ClearFavorites.tsx
+│   └── index.tsx
+├── FavoritesList/       # Favorites list components
+│   ├── FavButtons.tsx
+│   └── index.tsx
+├── Filters/             # Filter components
+│   ├── CategoriesFilter.tsx
+│   └── index.tsx
+├── Media/               # Media display components
+│   ├── MediaCard.tsx
+│   └── MediaSection.tsx
+├── NavButtons/          # Navigation components
+│   ├── BadgeCount.tsx
+│   ├── index.tsx
+│   └── SignInButton.tsx
+└── SearchBar/           # Search components
+    ├── index.tsx
+    └── SearchBarWrapper.tsx
+hooks/
+├── useDebounce.ts       # Debounce hook
+├── useFavorite.ts       # Favorite management hook
+└── useHydration.ts      # Hydration hook
+lib/
+└── utils.ts             # Utility functions
+services/
+└── itunes-api.ts        # iTunes API integration
+store/
+├── favorites-store.ts   # Favorites state management
+└── media-store.ts       # Media state management
+types/
+└── media.ts             # TypeScript type definitions
 ```
 
 ## Accessibility Features
@@ -101,15 +161,16 @@ src/
 ## Performance Considerations
 
 - Debounced search to reduce API calls
+- Home page ssr for most of the content
 - Responsive images
 - Efficient state management
-- Optimized bundle size
+- Optimized bundle size (lazy loading)
 
 ## Future Enhancements
 
 - [ ] User authentication with ZITADEL Cloud
-- [ ] Favorites/wishlist functionality
-- [ ] Advanced filtering options
+- [x] Favorites/wishlist functionality
+- [x] Advanced filtering options
 - [ ] Pagination or infinite scroll
 - [ ] Offline support
 - [ ] Better error handling
