@@ -17,6 +17,25 @@ jest.mock("next/link", () => {
 jest.mock("lucide-react", () => ({
   Heart: () => <svg data-testid="heart-icon" />,
   User: () => <svg data-testid="user-icon" />,
+  LogOut: () => <svg data-testid="logout-icon" />,
+}));
+
+jest.mock("@/store/favorites-store", () => ({
+  useFavoritesStore: () => ({
+    favorites: [],
+  }),
+}));
+
+jest.mock("./BadgeCount");
+jest.mock("./SignInButton");
+jest.mock("next-auth/react", () => ({
+  useSession: () => ({
+    data: null,
+    status: "unauthenticated",
+  }),
+  signIn: jest.fn(),
+  signOut: jest.fn(),
+  SessionProvider: ({ children }: { children: React.ReactNode }) => children,
 }));
 
 describe("NavButtons", () => {
