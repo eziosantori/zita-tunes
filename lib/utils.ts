@@ -115,3 +115,33 @@ export const showNoResults = (
     podcasts?.length === 0
   );
 };
+
+export const getMediaTypeFromItem = (item: MediaItem): MediaType => {
+  if (
+    item.wrapperType === "collection" ||
+    item.kind === "album" ||
+    item.collectionType === "Album" ||
+    (item.kind === "song" && item.collectionName)
+  ) {
+    return "album";
+  }
+
+  if (
+    item.kind === "audiobook" ||
+    item.wrapperType === "audiobook" ||
+    item.primaryGenreName?.toLowerCase().includes("audiobook")
+  ) {
+    return "audiobook";
+  }
+
+  if (
+    item.kind === "podcast" ||
+    item.kind === "podcast-episode" ||
+    (item.wrapperType === "track" &&
+      item.primaryGenreName?.toLowerCase().includes("podcast"))
+  ) {
+    return "podcast";
+  }
+
+  return "album"; // fallback
+};

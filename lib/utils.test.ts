@@ -4,6 +4,7 @@ import {
   getCategoryInfo,
   getHighResArtwork,
   getMediaData,
+  getMediaTypeFromItem,
   hasSearchResults,
   showNoResults,
 } from "./utils";
@@ -222,6 +223,81 @@ describe("utils", () => {
     it("should handle arrays with length > 0", () => {
       const mockItems = [{ trackId: 1 }, { trackId: 2 }] as MediaItem[];
       expect(showNoResults("test", false, mockItems, [], [])).toBe(false);
+    });
+
+    describe("getMediaTypeFromItem", () => {
+      it("should return 'album' for collection wrapperType", () => {
+        const item = { wrapperType: "collection" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("album");
+      });
+
+      it("should return 'album' for kind 'album'", () => {
+        const item = { kind: "album" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("album");
+      });
+
+      it("should return 'album' for collectionType 'Album'", () => {
+        const item = { collectionType: "Album" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("album");
+      });
+
+      it("should return 'album' for kind 'song' with collectionName", () => {
+        const item = {
+          kind: "song",
+          collectionName: "Some Album",
+        } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("album");
+      });
+
+      it("should return 'audiobook' for kind 'audiobook'", () => {
+        const item = { kind: "audiobook" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("audiobook");
+      });
+
+      it("should return 'audiobook' for wrapperType 'audiobook'", () => {
+        const item = { wrapperType: "audiobook" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("audiobook");
+      });
+
+      it("should return 'audiobook' if primaryGenreName includes 'audiobook'", () => {
+        const item = { primaryGenreName: "Audiobook" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("audiobook");
+        const item2 = { primaryGenreName: "Children's Audiobook" } as MediaItem;
+        expect(getMediaTypeFromItem(item2)).toBe("audiobook");
+      });
+
+      it("should return 'podcast' for kind 'podcast'", () => {
+        const item = { kind: "podcast" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("podcast");
+      });
+
+      it("should return 'podcast' for kind 'podcast-episode'", () => {
+        const item = { kind: "podcast-episode" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("podcast");
+      });
+
+      it("should return 'podcast' for wrapperType 'track' and primaryGenreName includes 'podcast'", () => {
+        const item = {
+          wrapperType: "track",
+          primaryGenreName: "Podcast",
+        } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("podcast");
+        const item2 = {
+          wrapperType: "track",
+          primaryGenreName: "Tech Podcast",
+        } as MediaItem;
+        expect(getMediaTypeFromItem(item2)).toBe("podcast");
+      });
+
+      it("should return 'album' as fallback for unknown types", () => {
+        const item = { kind: "unknown" } as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("album");
+      });
+
+      it("should handle missing properties gracefully", () => {
+        const item = {} as MediaItem;
+        expect(getMediaTypeFromItem(item)).toBe("album");
+      });
     });
   });
 });
